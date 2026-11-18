@@ -26,6 +26,14 @@ jobs:
     - name: Install uv
       uses: astral-sh/setup-uv@v3
 
+    - name: Cache uv dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-${{ matrix.python-version }}-${{ hashFiles('uv.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-${{ matrix.python-version }}-
+
     - name: Install dependencies
       run: |
         sudo apt install -y libegl1 libxkbcommon0
